@@ -23,20 +23,29 @@ export const useStyles = makeStyles(theme => ({
   },
 
   formCard: {
-    padding: "1em 2em",
+    padding: "2em 2em",
     backgroundColor: "#f4f4f4",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    "& > *": {
+      padding: "0.25em 0"
+    }
   },
 
   formInputBox: {
-    margin: "0.25em 0"
+    // margin: "0.25em 0"
+    // width: "100%"
+    minWidth: "20em"
   },
 
   center: {
     margin: "1em auto",
     padding: "1em 1em",
     maxWidth: "66%"
+  },
+
+  countrySelect: {
+    minWidth: "8em"
   }
 }));
 
