@@ -7,6 +7,7 @@ import AButton from "./AButton";
 import ShippingAddress from "./ShippingAddress";
 import ShortageInfo from "./ShortageInfo";
 import { styled } from "@material-ui/core/styles";
+import { Shortage, Address } from './types'
 
 const Header = styled("div")({
   marginTop: "1em"
@@ -14,12 +15,12 @@ const Header = styled("div")({
 
 export default () => {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState<string|null>("");
 
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
-  const [address, setAddress] = useState(null);
-  const [shortage, setShortage] = useState(null);
+  const [address, setAddress] = useState<Address|null>(null);
+  const [shortage, setShortage] = useState<Shortage|null>(null);
 
   // console.log("ADDRESS", address);
   // console.log("SHORTAGE", shortage);
@@ -43,7 +44,7 @@ export default () => {
 
         <VerifyEmail
           value={email}
-          onChange={setEmail}
+          onChange={email => setEmail(email)}
           onVerified={() => setDisabled(false)}
         />
 

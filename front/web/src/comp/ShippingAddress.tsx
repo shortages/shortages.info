@@ -1,11 +1,19 @@
-import React, { useReducer } from "react";
+import React, { useReducer, ChangeEvent } from "react";
 import SelectCountry from "./SelectCountry";
 import ATextField from "./ATextField";
-import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
+import { Address, ShippingAddressProps } from "./types"
 
-export default ({ onChange, disabled }) => {
-  const ACTION_SET_ADDRESS_FIELD = "SET_ADDRESS_FIELD";
+
+const ACTION_SET_ADDRESS_FIELD = "SET_ADDRESS_FIELD";
+
+interface ShippingAddressActionType {
+  type: typeof ACTION_SET_ADDRESS_FIELD,
+  field: string,
+  value: string
+}
+
+export default ({ onChange, disabled } : ShippingAddressProps) => {
 
   const initialState = {
     line1: "",
@@ -13,15 +21,15 @@ export default ({ onChange, disabled }) => {
     city: "",
     state: "",
     country: "CA",
-    zipcode: ""
+    postal_code: ""
   };
 
-  const isValid = address => {
-    const { line1, city, state, country, zipcode } = address;
-    return line1 && city && state && country && zipcode;
+  const isValid = (address : Address) => {
+    const { line1, city, state, country, postal_code } = address;
+    return line1 && city && state && country && postal_code;
   };
 
-  const reducer = (state, action) => {
+  const reducer = (state : Address, action: ShippingAddressActionType) => {
     switch (action.type) {
       case ACTION_SET_ADDRESS_FIELD:
         state = {
@@ -41,12 +49,12 @@ export default ({ onChange, disabled }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log(state);
+  // console.log(state);
 
   const codeLabel = state.country == "US" ? "Zip Code" : "Postal Code";
   const stateLabel = state.country == "US" ? "State" : "Province";
 
-  const setAddressField = field => event => {
+  const setAddressField = (field: string) => (event : ChangeEvent<any>) => {
     dispatch({
       type: ACTION_SET_ADDRESS_FIELD,
       field,
@@ -116,8 +124,8 @@ export default ({ onChange, disabled }) => {
             disabled={disabled}
             label={codeLabel}
             minWidth="10em"
-            value={state.zipcode}
-            onChange={setAddressField("zipcode")}
+            value={state.postal_code}
+            onChange={setAddressField("postal_code")}
           />
         </Box>
       </Box>

@@ -1,15 +1,16 @@
-import React, { useReducer } from "react";
+import { Shortage, ShortageActionType, ShortageInfoProps, ACTION_SET_FIELD } from "./types"
+
+import React, { useReducer, ChangeEvent } from "react";
 import ATextField from "./ATextField";
 
-const ACTION_SET_FIELD = "SET_FIELD";
-
-const initialState = {
+const initialState : Shortage = {
+  first_name: "",
+  last_name: "",
   facility: "",
-  contactName: "",
   description: ""
 };
 
-const reducer = (state, action) => {
+const reducer = (state : Shortage, action : ShortageActionType) => {
   switch (action.type) {
     case ACTION_SET_FIELD:
       state = {
@@ -23,20 +24,22 @@ const reducer = (state, action) => {
   return state;
 };
 
-export default ({ disabled, onChange }) => {
+
+export default ({ disabled, onChange } : ShortageInfoProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   //   console.log("State", state);
 
-  const setShortageField = field => event => {
+  const setShortageField = (field : string) => (event : ChangeEvent<HTMLInputElement>) => {
     // console.log(`Setting ${field} ${event.target.value}`);
     dispatch({
       type: ACTION_SET_FIELD,
       field,
-      value: event.target.value
+      value: (event.target as HTMLInputElement).value
     });
     return false;
   };
-  if (state.facility && state.contactName && state.description) {
+
+  if (state.facility && state.first_name && state.last_name && state.description) {
     onChange(state);
   } else {
     onChange(null);
@@ -54,9 +57,16 @@ export default ({ disabled, onChange }) => {
       <ATextField
         required
         disabled={disabled}
-        label="Contact Name"
-        value={state.contactName}
-        onChange={setShortageField("contactName")}
+        label="First Name"
+        value={state.first_name}
+        onChange={setShortageField("first_name")}
+      />
+      <ATextField
+        required
+        disabled={disabled}
+        label="Last Name"
+        value={state.last_name}
+        onChange={setShortageField("last_name")}
       />
       <ATextField
         multiline

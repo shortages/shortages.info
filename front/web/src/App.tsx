@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import * as React from "react";
+
 import AButton from "./comp/AButton";
 import CreateAccount from "./comp/CreateAccount";
 
 import firebase from "firebase";
 import firebaseConfig from "./firebase-config";
-const firebaseui = require("firebaseui");
 
 firebase.initializeApp(firebaseConfig);
 
@@ -42,10 +40,15 @@ function App() {
   //   // });
   // }, []);
 
+  const onAnnounce = () => {
+    console.log("Announce a shortage clicked")
+    console.log("Announce a shortage ok")
+  }
+
   return (
     <div className="App">
-      <AButton variant="contained" color="red">
-        Announce a shortage
+      <AButton variant="contained" onClick={onAnnounce}>
+        Announce shortage
       </AButton>
       <CreateAccount></CreateAccount>
       <div id="firebaseui-auth-container" />
