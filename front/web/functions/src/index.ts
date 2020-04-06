@@ -5,6 +5,19 @@ import express from "express";
 import cors from "cors";
 import { Shortage } from "./index.d";
 
+interface User {
+  id?: string;
+  email?: string;
+}
+
+declare global {
+  namespace Express {
+    interface Request {
+      user: User;
+    }
+  }
+}
+
 admin.initializeApp();
 const db = admin.firestore();
 
@@ -14,12 +27,35 @@ const db = admin.firestore();
 const app = express();
 
 // Automatically allow cross-origin requests
-app.use(cors({ origin: true }));
+app.use(cors());
 
 // Add middleware to authenticate requests
 // app.use(myMiddleware);
 
 // build multiple CRUD interfaces:
+
+app.use((req, res, next) => {
+  const idToken = req.get("Authorization");
+  console.log("Authorization: ", idToken);
+  if (idToken) {
+    admin
+      .auth()
+      .verifyIdToken(idToken)
+      .then(decoded => {
+        const user: User = {};
+        user.id = decoded.uid;
+        user.email = decoded.firebase.identities.email[0];
+        req.user = user;
+
+        console.log(`Set userId ${req.user.id} and email ${req.user.email}`);
+        next();
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(401).end();
+      });
+  }
+});
 
 app.post("/shortage", async (req, res) => {
   try {
@@ -36,6 +72,15 @@ app.post("/shortage", async (req, res) => {
   }
 
   res.send({ ok: true });
+});
+
+app.post("/account", async (req, res) => {
+  console.log("req.body", req.body);
+  console.log("req.user.id", req.user.id);
+  console.log("req.user.email", req.user.email);
+  res.status(200).send({
+    ok: true
+  });
 });
 
 // app.get("/:id", (req, res) => res.send(Widgets.getById(req.params.id)));

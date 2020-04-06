@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import AButton from "./comp/AButton";
+// import AButton from "./comp/AButton";
 import CreateAccount from "./comp/CreateAccount";
 
 import firebase from "firebase";
@@ -47,9 +47,9 @@ function App() {
 
   return (
     <div className="App">
-      <AButton variant="contained" onClick={onAnnounce}>
+      {/* <AButton variant="contained" onClick={onAnnounce}>
         Announce shortage
-      </AButton>
+      </AButton> */}
       <CreateAccount></CreateAccount>
       <div id="firebaseui-auth-container" />
     </div>

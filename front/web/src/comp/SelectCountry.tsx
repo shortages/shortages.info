@@ -6,7 +6,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 import FormControl from "@material-ui/core/FormControl";
 
-import { SelectCountryProps } from "./types"
+import { SelectCountryProps } from "../types"
+
 
 export default ({ value, onChange }: SelectCountryProps) => {
 

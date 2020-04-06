@@ -5,6 +5,8 @@ import './index.css'
 // import * as serviceWorker from "./serviceWorker";
 import { StylesProvider } from "@material-ui/core/styles";
 import { Provider } from "react-redux";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import store from "./state/store";
 
@@ -14,6 +16,7 @@ ReactDOM.render(
   <Provider store={store}>
     <StylesProvider injectFirst>
       <App />
+      <ToastContainer />
     </StylesProvider>
   </Provider>,
 

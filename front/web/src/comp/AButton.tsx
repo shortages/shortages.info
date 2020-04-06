@@ -13,7 +13,8 @@ const AButton : FunctionComponent<AButtonProps> = ({ onClick, disabled = false, 
     <Button
       className={classes.button}
       onClick={onClick}
-      {...props}
+      disabled={disabled}
+      // {...props}
     >
       {children}
     </Button>

@@ -2,7 +2,7 @@ import React, { useReducer, ChangeEvent } from "react";
 import SelectCountry from "./SelectCountry";
 import ATextField from "./ATextField";
 import Box from "@material-ui/core/Box";
-import { Address, ShippingAddressProps } from "./types"
+import { Address, ShippingAddressProps } from "../types"
 
 
 const ACTION_SET_ADDRESS_FIELD = "SET_ADDRESS_FIELD";
@@ -41,6 +41,7 @@ export default ({ onChange, disabled } : ShippingAddressProps) => {
         } else {
           onChange(null);
         }
+        break;
       default:
         break;
     }
@@ -51,8 +52,8 @@ export default ({ onChange, disabled } : ShippingAddressProps) => {
 
   // console.log(state);
 
-  const codeLabel = state.country == "US" ? "Zip Code" : "Postal Code";
-  const stateLabel = state.country == "US" ? "State" : "Province";
+  const codeLabel = state.country === "US" ? "Zip Code" : "Postal Code";
+  const stateLabel = state.country === "US" ? "State" : "Province";
 
   const setAddressField = (field: string) => (event : ChangeEvent<any>) => {
     dispatch({

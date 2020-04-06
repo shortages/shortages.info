@@ -1,6 +1,7 @@
-import { Shortage, ShortageActionType, ShortageInfoProps, ACTION_SET_FIELD } from "./types"
-
 import React, { useReducer, ChangeEvent } from "react";
+import { Shortage, ShortageActionType, ShortageInfoProps, ACTION_SET_FIELD } from "./types"
+import Box from "@material-ui/core/Box";
+
 import ATextField from "./ATextField";
 
 const initialState : Shortage = {
@@ -8,20 +9,6 @@ const initialState : Shortage = {
   last_name: "",
   facility: "",
   description: ""
-};
-
-const reducer = (state : Shortage, action : ShortageActionType) => {
-  switch (action.type) {
-    case ACTION_SET_FIELD:
-      state = {
-        ...state,
-        [action.field]: action.value
-      };
-      break;
-    default:
-      break;
-  }
-  return state;
 };
 
 
@@ -47,27 +34,6 @@ export default ({ disabled, onChange } : ShortageInfoProps) => {
 
   return (
     <>
-      <ATextField
-        required
-        disabled={disabled}
-        value={state.facility}
-        onChange={setShortageField("facility")}
-        label="Hospital / Care Facility Name"
-      />
-      <ATextField
-        required
-        disabled={disabled}
-        label="First Name"
-        value={state.first_name}
-        onChange={setShortageField("first_name")}
-      />
-      <ATextField
-        required
-        disabled={disabled}
-        label="Last Name"
-        value={state.last_name}
-        onChange={setShortageField("last_name")}
-      />
       <ATextField
         multiline
         disabled={disabled}
